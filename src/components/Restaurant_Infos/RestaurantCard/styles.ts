@@ -1,17 +1,16 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
-import { ButtonContainer } from '../Button/styles'
+import { cores } from '../../../styles'
+import { ButtonContainer } from '../../UI/Button/styles'
 
 export const CardContainer = styled.div`
   max-width: 480px;
   background-color: white;
   border: 1px solid ${cores.rosa};
   position: relative;
-  img {
+  > img {
     width: 100%;
-  }
-  > div {
-    padding: 8px;
+    height: 218px;
+    object-fit: cover;
   }
 `
 
@@ -19,9 +18,11 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 180px;
+  padding: 8px;
   p {
     line-height: 22px;
+    font-size: 14px;
+    padding: 16px 0;
   }
 `
 

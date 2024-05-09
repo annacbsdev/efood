@@ -2,7 +2,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import GlobalCss from './styles'
 import Rotas from './routes'
-import Footer from './components/Footer'
+import Footer from './components/Common/Footer'
 
 function App() {
   return (

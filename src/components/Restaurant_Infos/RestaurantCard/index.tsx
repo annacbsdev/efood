@@ -1,6 +1,6 @@
-import Button from '../Button'
+import Button from '../../UI/Button'
 import { CardContainer, CategoryList, Content, Title } from './styles'
-import estrela from '../../assets/estrela.png'
+import estrela from '../../../assets/estrela.png'
 
 type Props = {
   title: string
@@ -8,17 +8,10 @@ type Props = {
   description: string
   rating: number
   image: string
-  restaurantPage: string
+  id: number
 }
 
-const Card = ({
-  category,
-  description,
-  image,
-  rating,
-  title,
-  restaurantPage
-}: Props) => {
+const Card = ({ category, description, image, rating, title, id }: Props) => {
   return (
     <CardContainer>
       <img src={image} alt={title} />
@@ -38,7 +31,7 @@ const Card = ({
         </Title>
         <p>{description}</p>
         <div>
-          <Button type="link" to={restaurantPage} title="Saiba mais">
+          <Button type="link" to={`/restaurant/${id}`} title="Saiba mais">
             Saiba mais
           </Button>
         </div>

@@ -1,4 +1,4 @@
-import logo from '../../assets/logo.png'
+import logo from '../../../assets/logo.png'
 import { TiSocialInstagram } from 'react-icons/ti'
 import { FaFacebookF } from 'react-icons/fa'
 import { FaTwitter } from 'react-icons/fa'

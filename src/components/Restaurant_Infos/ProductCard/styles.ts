@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { cores } from '../../../styles'
 
 export const ProductCardStyles = styled.div`
   width: 320px;
@@ -13,9 +13,11 @@ export const ProductCardStyles = styled.div`
 
   img {
     width: 100%;
+    height: 180px;
+    object-fit: cover;
   }
 
-  h1 {
+  h2 {
     font-size: 16px;
   }
 

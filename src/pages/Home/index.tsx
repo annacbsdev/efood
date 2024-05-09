@@ -1,5 +1,5 @@
-import Banner from '../../components/Banner'
-import RestaurantList from '../../components/RestaurantList'
+import Banner from '../../components/Common/Banner'
+import RestaurantList from '../../components/Restaurant_Infos/RestaurantList'
 
 const Home = () => (
   <>

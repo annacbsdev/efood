@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import fundo from '../../assets/fundo.jpg'
-import { cores } from '../../styles'
+import fundo from '../../../assets/fundo.jpg'
+import { cores } from '../../../styles'
 
 export const HeaderStyles = styled.header`
   height: 160px;
