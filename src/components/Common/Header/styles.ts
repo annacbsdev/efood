@@ -20,6 +20,7 @@ export const HeaderContent = styled.div`
 
   h2 {
     font-size: 18px;
+    cursor: pointer;
   }
 
   a {

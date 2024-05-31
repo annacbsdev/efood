@@ -3,6 +3,8 @@ import { Modal, ModalContent, RestaurantMenuStyles, Text } from './styles'
 import { Prato } from '../RestaurantList'
 import { useState } from 'react'
 import fechar from '../../../assets/close.png'
+import { useDispatch } from 'react-redux'
+import { add, open } from '../../../store/reducers/cart'
 
 type Props = {
   products: Prato[]
@@ -10,6 +12,13 @@ type Props = {
 
 interface ModalState extends Prato {
   isVisible: boolean
+}
+
+export const formataPreco = (preco = 0) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(preco)
 }
 
 const RestaurantMenu = ({ products }: Props) => {
@@ -43,11 +52,11 @@ const RestaurantMenu = ({ products }: Props) => {
     })
   }
 
-  const formataPreco = (preco = 0) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(preco)
+  const dispatch = useDispatch()
+
+  const addToCart = () => {
+    dispatch(add(modal))
+    dispatch(open())
   }
 
   return (
@@ -86,7 +95,12 @@ const RestaurantMenu = ({ products }: Props) => {
                 <p>{modal.descricao}</p>
                 <p>Serve: {modal.porcao}</p>
                 <div>
-                  <button>
+                  <button
+                    onClick={() => {
+                      closeModal()
+                      addToCart()
+                    }}
+                  >
                     Adicionar ao carrinho - {formataPreco(modal.preco)}
                   </button>
                 </div>

@@ -1,6 +1,6 @@
 import Card from '../RestaurantCard'
 import { RestaurantListStyles } from './styles'
-import { useEffect, useState } from 'react'
+import { useGetRestaurantsQuery } from '../../../services/api'
 
 export type Prato = {
   id: number
@@ -23,26 +23,11 @@ export type Restaurante = {
 }
 
 const RestaurantList = () => {
-  const [restaurants, setRestaurants] = useState<Restaurante[]>([])
+  const { data: restaurants, isLoading } = useGetRestaurantsQuery()
 
-  useEffect(() => {
-    const fetchRestaurants = async () => {
-      try {
-        const response = await fetch(
-          'https://fake-api-tau.vercel.app/api/efood/restaurantes'
-        )
-        if (!response.ok) {
-          throw new Error('Erro ao carregar os dados dos restaurantes')
-        }
-        const data = await response.json()
-        setRestaurants(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    fetchRestaurants()
-  }, [])
+  if (!restaurants) {
+    return <h3>Carregando...</h3>
+  }
 
   return (
     <div className="container">
