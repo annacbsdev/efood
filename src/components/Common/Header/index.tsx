@@ -8,7 +8,6 @@ import { RootReducer } from '../../../store'
 const Header = () => {
   const dispatch = useDispatch()
   const { items } = useSelector((state: RootReducer) => state.cart)
-
   const openCart = () => {
     dispatch(open())
   }

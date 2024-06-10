@@ -88,3 +88,82 @@ export const CartItem = styled.li`
     }
   }
 `
+
+export const Form = styled.form`
+  color: ${cores.bege};
+
+  h2 {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  input {
+    padding: 8px;
+    border: none;
+    font-weight: bold;
+    background-color: ${cores.bege};
+  }
+
+  > input {
+    width: 328px;
+  }
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    label {
+      display: block;
+    }
+    input {
+      width: 139px;
+    }
+  }
+
+  button {
+    background-color: ${cores.bege};
+    color: ${cores.rosa};
+    border: none;
+    font-weight: bold;
+    padding: 4px 0;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 8px;
+    margin-top: 24px;
+  }
+
+  #cardNumber {
+    width: 212px;
+  }
+
+  #cardCode {
+    width: 70px;
+  }
+
+  .error {
+    border: 2px solid red;
+  }
+`
+
+export const CompletedText = styled.div`
+  color: ${cores.bege};
+
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 22px;
+    margin-bottom: 24px;
+    margin-top: 16px;
+  }
+`

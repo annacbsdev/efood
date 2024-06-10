@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 
 export const cores = {
   rosa: '#E66767',
-  bege: '#FFF8F2',
+  bege: '#FFEBD9',
   footer: '#FFEBD9'
 }
 
