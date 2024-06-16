@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { cores } from '../../../styles'
+import { colors } from '../../../styles'
 import { Link } from 'react-router-dom'
 
 export const ButtonContainer = styled.button`
-  background-color: ${cores.rosa};
+  background-color: ${colors.pink};
   border: none;
   color: white;
   font-size: 14px;
@@ -12,7 +12,7 @@ export const ButtonContainer = styled.button`
 `
 
 export const ButtonLink = styled(Link)`
-  background-color: ${cores.rosa};
+  background-color: ${colors.pink};
   border: none;
   color: white;
   font-size: 14px;

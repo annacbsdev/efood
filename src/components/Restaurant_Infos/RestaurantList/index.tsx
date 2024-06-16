@@ -23,7 +23,7 @@ export type Restaurante = {
 }
 
 const RestaurantList = () => {
-  const { data: restaurants, isLoading } = useGetRestaurantsQuery()
+  const { data: restaurants } = useGetRestaurantsQuery()
 
   if (!restaurants) {
     return <h3>Carregando...</h3>

@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { store } from './store'
 
 import GlobalCss from './styles'
-import Rotas from './routes'
+import RoutesEfood from './routes'
 import Footer from './components/Common/Footer'
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <GlobalCss />
-        <Rotas />
+        <RoutesEfood />
         <Footer />
       </BrowserRouter>
     </Provider>

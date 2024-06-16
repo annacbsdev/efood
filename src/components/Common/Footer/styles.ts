@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { cores } from '../../../styles'
+import { colors } from '../../../styles'
 
 export const FooterStyles = styled.footer`
   height: 300px;
-  background-color: ${cores.footer};
+  background-color: ${colors.footer};
   padding: 40px;
   text-align: center;
   img {
@@ -14,8 +14,8 @@ export const FooterStyles = styled.footer`
     font-size: 10px;
   }
   .icone {
-    color: ${cores.footer};
-    background-color: ${cores.rosa};
+    color: ${colors.footer};
+    background-color: ${colors.pink};
     width: 24px;
     height: 24px;
     border-radius: 50%;

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../../styles'
+import { colors } from '../../../styles'
 
 export const CartContainer = styled.div`
   position: fixed;
@@ -27,21 +27,11 @@ export const Overlay = styled.div`
 `
 
 export const Sidebar = styled.aside`
-  background-color: ${cores.rosa};
+  background-color: ${colors.pink};
   z-index: 1;
   padding: 32px 16px;
   max-width: 360px;
   width: 100%;
-
-  > button {
-    background-color: ${cores.bege};
-    color: ${cores.rosa};
-    border: none;
-    font-weight: bold;
-    padding: 4px 0;
-    cursor: pointer;
-    width: 100%;
-  }
 
   .valor_total {
     display: flex;
@@ -51,13 +41,13 @@ export const Sidebar = styled.aside`
 
     p {
       font-weight: bold;
-      color: ${cores.bege};
+      color: ${colors.beige};
     }
   }
 `
 
 export const CartItem = styled.li`
-  background-color: ${cores.bege};
+  background-color: ${colors.beige};
   display: flex;
   padding: 8px;
   margin-bottom: 16px;
@@ -73,6 +63,7 @@ export const CartItem = styled.li`
   h3 {
     font-size: 18px;
     margin-bottom: 16px;
+    color: ${colors.pink};
   }
 
   button {
@@ -89,8 +80,19 @@ export const CartItem = styled.li`
   }
 `
 
-export const Form = styled.form`
-  color: ${cores.bege};
+export const CartButton = styled.button`
+  background-color: ${colors.beige};
+  color: ${colors.pink};
+  border: none;
+  font-weight: bold;
+  padding: 4px 0;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 8px;
+`
+
+export const StyledForm = styled.div`
+  color: ${colors.beige};
 
   h2 {
     font-size: 16px;
@@ -98,72 +100,38 @@ export const Form = styled.form`
   }
 
   label {
-    display: block;
     font-size: 14px;
-    font-weight: bold;
-    margin-top: 8px;
+    display: block;
     margin-bottom: 8px;
+    font-weight: bold;
   }
 
   input {
-    padding: 8px;
     border: none;
+    background-color: ${colors.beige};
+    padding: 8px;
+    width: 100%;
     font-weight: bold;
-    background-color: ${cores.bege};
-  }
-
-  > input {
-    width: 328px;
+    margin-bottom: 8px;
   }
 
   > div {
+    margin-bottom: 24px;
+  }
+
+  .smallField {
     display: flex;
-    justify-content: space-between;
-    label {
-      display: block;
-    }
-    input {
-      width: 139px;
-    }
+    gap: 34px;
   }
 
-  button {
-    background-color: ${cores.bege};
-    color: ${cores.rosa};
-    border: none;
-    font-weight: bold;
-    padding: 4px 0;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 8px;
-    margin-top: 24px;
-  }
-
-  #cardNumber {
-    width: 212px;
-  }
-
-  #cardCode {
-    width: 70px;
-  }
-
-  .error {
-    border: 2px solid red;
-  }
-`
-
-export const CompletedText = styled.div`
-  color: ${cores.bege};
-
-  h2 {
-    font-size: 16px;
-    font-weight: bold;
+  .numberAndCode {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 34px;
   }
 
   p {
     font-size: 14px;
     line-height: 22px;
-    margin-bottom: 24px;
-    margin-top: 16px;
   }
 `

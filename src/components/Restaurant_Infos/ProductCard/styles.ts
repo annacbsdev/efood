@@ -1,11 +1,11 @@
 import styled from 'styled-components'
-import { cores } from '../../../styles'
+import { colors } from '../../../styles'
 
 export const ProductCardStyles = styled.div`
   width: 320px;
   height: 340px;
-  background-color: ${cores.rosa};
-  color: ${cores.bege};
+  background-color: ${colors.pink};
+  color: ${colors.beige};
   padding: 8px;
   display: flex;
   flex-direction: column;
@@ -31,8 +31,8 @@ export const ProductCardStyles = styled.div`
   }
 
   button {
-    background-color: ${cores.bege};
-    color: ${cores.rosa};
+    background-color: ${colors.beige};
+    color: ${colors.pink};
     border: none;
     font-weight: bold;
     padding: 4px 0;

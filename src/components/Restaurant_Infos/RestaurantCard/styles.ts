@@ -1,11 +1,11 @@
 import styled from 'styled-components'
-import { cores } from '../../../styles'
+import { colors } from '../../../styles'
 import { ButtonContainer } from '../../UI/Button/styles'
 
 export const CardContainer = styled.div`
   max-width: 480px;
   background-color: white;
-  border: 1px solid ${cores.rosa};
+  border: 1px solid ${colors.pink};
   position: relative;
   > img {
     width: 100%;

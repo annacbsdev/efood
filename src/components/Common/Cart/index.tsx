@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import {
+  CartButton,
   CartContainer,
   CartItem,
-  CompletedText,
-  Form,
   Overlay,
-  Sidebar
+  Sidebar,
+  StyledForm
 } from './styles'
 import lixo from '../../../assets/lixo.png'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,12 +15,13 @@ import { formataPreco } from '../../Restaurant_Infos/RestaurantMenu'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { usePurchaseMutation } from '../../../services/api'
+import InputMask from 'react-input-mask'
 
 const Cart = () => {
   const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
   const [isCheckoutAddress, setIsCheckoutAddress] = useState(false)
   const [isCheckoutPayment, setIsCheckoutPayment] = useState(false)
-  const [purchase, { data, isSuccess, isLoading }] = usePurchaseMutation()
+  const [purchase, { data, isSuccess }] = usePurchaseMutation()
 
   const form = useFormik({
     initialValues: {
@@ -108,6 +109,7 @@ const Cart = () => {
           }
         }
       })
+      console.log(data)
     }
   })
 
@@ -153,215 +155,222 @@ const Cart = () => {
     <CartContainer className={isOpen ? 'is-open' : ''}>
       <Overlay onClick={closeCart} />
       <Sidebar>
-        {isSuccess && data ? (
-          <>
-            <CompletedText>
-              <h2>Pedido realizado - ORDER_ID</h2>
-              <p>
-                Estamos felizes em informar que seu pedido já está em processo
-                de preparação e, em breve, será entregue no endereço fornecido.
-                <br />
-                <br />
-                Gostaríamos de ressaltar que nossos entregadores não estão
-                autorizados a realizar cobranças extras. <br />
-                <br />
-                Lembre-se da importância de higienizar as mãos após o
-                recebimento do pedido, garantindo assim sua segurança e
-                bem-estar durante a refeição. <br />
-                <br />
-                Esperamos que desfrute de uma deliciosa e agradável experiência
-                gastronômica. Bom apetite!
-              </p>
-            </CompletedText>
-            <button onClick={closeCart}>Concluir</button>
-          </>
-        ) : !isCheckoutAddress && !isCheckoutPayment ? (
-          <>
-            <ul>
-              {items.map((item) => (
-                <CartItem key={item.id}>
-                  <img src={item.foto} />
-                  <div>
-                    <h3>{item.nome}</h3>
-                    <p>{formataPreco(item.preco)}</p>
-                  </div>
-                  <button onClick={() => removeItem(item.id)}>
-                    <img src={lixo} />
-                  </button>
-                </CartItem>
-              ))}
-            </ul>
-            <div className="valor_total">
-              <p>Valor Total</p>
-              <p>{formataPreco(getTotalPrice())}</p>
-            </div>
-            <button onClick={handleCheckoutAddress}>
-              Continuar com a compra
-            </button>
-          </>
-        ) : isCheckoutAddress && !isCheckoutPayment ? (
-          <>
-            <Form
-              onSubmit={(e) => {
-                e.preventDefault()
-                form.handleSubmit
-                handleCheckoutPayment()
-              }}
-            >
+        <form onSubmit={form.handleSubmit}>
+          {isSuccess && data ? (
+            <StyledForm>
+              <div>
+                <h2>Pedido realizado - ORDER_ID</h2>
+                <p>
+                  Estamos felizes em informar que seu pedido já está em processo
+                  de preparação e, em breve, será entregue no endereço
+                  fornecido.
+                  <br />
+                  <br />
+                  Gostaríamos de ressaltar que nossos entregadores não estão
+                  autorizados a realizar cobranças extras. <br />
+                  <br />
+                  Lembre-se da importância de higienizar as mãos após o
+                  recebimento do pedido, garantindo assim sua segurança e
+                  bem-estar durante a refeição. <br />
+                  <br />
+                  Esperamos que desfrute de uma deliciosa e agradável
+                  experiência gastronômica. Bom apetite!
+                </p>
+              </div>
+              <CartButton onClick={closeCart}>Concluir</CartButton>
+            </StyledForm>
+          ) : !isCheckoutAddress && !isCheckoutPayment ? (
+            <>
+              <ul>
+                {items.map((item) => (
+                  <CartItem key={item.id}>
+                    <img src={item.foto} />
+                    <div>
+                      <h3>{item.nome}</h3>
+                      <p>{formataPreco(item.preco)}</p>
+                    </div>
+                    <button onClick={() => removeItem(item.id)}>
+                      <img src={lixo} />
+                    </button>
+                  </CartItem>
+                ))}
+              </ul>
+              <div className="valor_total">
+                <p>Valor Total</p>
+                <p>{formataPreco(getTotalPrice())}</p>
+              </div>
+              <CartButton onClick={handleCheckoutAddress}>
+                Continuar com a compra
+              </CartButton>
+            </>
+          ) : isCheckoutAddress && !isCheckoutPayment ? (
+            <StyledForm>
               <h2>Entrega</h2>
-              <label htmlFor="receiver">Quem irá receber</label>
-              <input
-                id="receiver"
-                type="text"
-                name="receiver"
-                value={form.values.receiver}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-                className={checkInputHasError('receiver') ? 'error' : ''}
-              />
-              <label htmlFor="address">Endereço</label>
-              <input
-                id="address"
-                type="text"
-                name="address"
-                value={form.values.address}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-                className={checkInputHasError('address') ? 'error' : ''}
-              />
-              <label htmlFor="city">Cidade</label>
-              <input
-                id="city"
-                type="text"
-                name="city"
-                value={form.values.city}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-                className={checkInputHasError('city') ? 'error' : ''}
-              />
               <div>
-                <div>
-                  <label htmlFor="zipCode">CEP</label>
-                  <input
-                    id="zipCode"
-                    type="text"
-                    name="zipCode"
-                    value={form.values.zipCode}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                    className={checkInputHasError('zipCode') ? 'error' : ''}
-                  />
+                <label htmlFor="receiver">Quem irá receber</label>
+                <input
+                  id="receiver"
+                  type="text"
+                  name="receiver"
+                  value={form.values.receiver}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  className={checkInputHasError('receiver') ? 'error' : ''}
+                />
+                <label htmlFor="address">Endereço</label>
+                <input
+                  id="address"
+                  type="text"
+                  name="address"
+                  value={form.values.address}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  className={checkInputHasError('address') ? 'error' : ''}
+                />
+                <label htmlFor="city">Cidade</label>
+                <input
+                  id="city"
+                  type="text"
+                  name="city"
+                  value={form.values.city}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  className={checkInputHasError('city') ? 'error' : ''}
+                />
+                <div className="smallField">
+                  <div>
+                    <label htmlFor="zipCode">CEP</label>
+                    <InputMask
+                      id="zipCode"
+                      type="text"
+                      name="zipCode"
+                      value={form.values.zipCode}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={checkInputHasError('zipCode') ? 'error' : ''}
+                      mask="99999-999"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="number">Número</label>
+                    <input
+                      id="number"
+                      type="number"
+                      name="number"
+                      value={form.values.number}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={checkInputHasError('number') ? 'error' : ''}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="number">Número</label>
-                  <input
-                    id="number"
-                    type="number"
-                    name="number"
-                    value={form.values.number}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                    className={checkInputHasError('number') ? 'error' : ''}
-                  />
-                </div>
+                <label htmlFor="complement">Complemento (opcional)</label>
+                <input
+                  id="complement"
+                  type="text"
+                  name="complement"
+                  value={form.values.complement}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                />
               </div>
-              <label htmlFor="complement">Complemento (opcional)</label>
-              <input
-                id="complement"
-                type="text"
-                name="complement"
-                value={form.values.complement}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-              />
-              <button type="submit">Continuar com o pagamento</button>
-            </Form>
-            <button onClick={() => setIsCheckoutAddress(false)}>
-              Voltar para o carrinho
-            </button>
-          </>
-        ) : !isCheckoutAddress && isCheckoutPayment ? (
-          <>
-            <Form
-              onSubmit={(e) => {
-                e.preventDefault
-                form.handleSubmit
-              }}
-            >
+              <CartButton type="button" onClick={handleCheckoutPayment}>
+                Continuar com o pagamento
+              </CartButton>
+
+              <CartButton onClick={() => setIsCheckoutAddress(false)}>
+                Voltar para o carrinho
+              </CartButton>
+            </StyledForm>
+          ) : !isCheckoutAddress && isCheckoutPayment ? (
+            <StyledForm>
               <h2>Pagamento - Valor a pagar R$ 190,90</h2>
-              <label htmlFor="cardDisplayName">Nome no cartão</label>
-              <input
-                id="cardDisplayName"
-                type="text"
-                name="cardDisplayName"
-                value={form.values.cardDisplayName}
-                onChange={form.handleChange}
-                onBlur={form.handleBlur}
-                className={checkInputHasError('cardDisplayName') ? 'error' : ''}
-              />
               <div>
-                <div>
-                  <label htmlFor="cardNumber">Número do cartão</label>
-                  <input
-                    id="cardNumber"
-                    type="text"
-                    name="cardNumber"
-                    value={form.values.cardNumber}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                    className={checkInputHasError('cardNumber') ? 'error' : ''}
-                  />
+                <label htmlFor="cardDisplayName">Nome no cartão</label>
+                <input
+                  id="cardDisplayName"
+                  type="text"
+                  name="cardDisplayName"
+                  value={form.values.cardDisplayName}
+                  onChange={form.handleChange}
+                  onBlur={form.handleBlur}
+                  className={
+                    checkInputHasError('cardDisplayName') ? 'error' : ''
+                  }
+                />
+                <div className="numberAndCode">
+                  <div>
+                    <label htmlFor="cardNumber">Número do cartão</label>
+                    <InputMask
+                      id="cardNumber"
+                      type="text"
+                      name="cardNumber"
+                      value={form.values.cardNumber}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={
+                        checkInputHasError('cardNumber') ? 'error' : ''
+                      }
+                      mask="9999 9999 9999 9999"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="cardCode">CVV</label>
+                    <InputMask
+                      id="cardCode"
+                      type="number"
+                      name="cardCode"
+                      value={form.values.cardCode}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={checkInputHasError('cardCode') ? 'error' : ''}
+                      mask="999"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="cardCode">CVV</label>
-                  <input
-                    id="cardCode"
-                    type="number"
-                    name="cardCode"
-                    value={form.values.cardCode}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                    className={checkInputHasError('cardCode') ? 'error' : ''}
-                  />
+                <div className="smallField">
+                  <div>
+                    <label htmlFor="expiresMonth">Mês de vencimento</label>
+                    <InputMask
+                      id="expiresMonth"
+                      type="number"
+                      name="expiresMonth"
+                      value={form.values.expiresMonth}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={
+                        checkInputHasError('expiresMonth') ? 'error' : ''
+                      }
+                      mask="99"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="expiresYear">Ano de vencimento</label>
+                    <InputMask
+                      id="expiresYear"
+                      type="number"
+                      name="expiresYear"
+                      value={form.values.expiresYear}
+                      onChange={form.handleChange}
+                      onBlur={form.handleBlur}
+                      className={
+                        checkInputHasError('expiresYear') ? 'error' : ''
+                      }
+                      mask="9999"
+                    />
+                  </div>
                 </div>
               </div>
-              <div>
-                <div>
-                  <label htmlFor="expiresMonth">Mês de vencimento</label>
-                  <input
-                    id="expiresMonth"
-                    type="number"
-                    name="expiresMonth"
-                    value={form.values.expiresMonth}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                    className={
-                      checkInputHasError('expiresMonth') ? 'error' : ''
-                    }
-                  />
-                </div>
-                <div>
-                  <label htmlFor="expiresYear">Ano de vencimento</label>
-                  <input
-                    id="expiresYear"
-                    type="number"
-                    name="expiresYear"
-                    value={form.values.expiresYear}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                    className={checkInputHasError('expiresYear') ? 'error' : ''}
-                  />
-                </div>
-              </div>
-              <button type="submit">Finalizar pagamento</button>
-            </Form>
-            <button onClick={handleGoBackToAddress}>
-              Voltar para a edição do endereço
-            </button>
-          </>
-        ) : (
-          <h1> oi</h1>
-        )}
+              <CartButton type="submit">Finalizar pagamento</CartButton>
+
+              <CartButton onClick={handleGoBackToAddress}>
+                Voltar para a edição do endereço
+              </CartButton>
+            </StyledForm>
+          ) : (
+            <h1> oi</h1>
+          )}
+        </form>
       </Sidebar>
     </CartContainer>
   )

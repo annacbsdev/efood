@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../../styles'
+import { colors } from '../../../styles'
 
 export const RestaurantMenuStyles = styled.div`
   display: grid;
@@ -38,7 +38,7 @@ export const Modal = styled.div`
 `
 
 export const ModalContent = styled.div`
-  background-color: ${cores.rosa};
+  background-color: ${colors.pink};
   width: 1024px;
   height: 344px;
   display: flex;
@@ -69,7 +69,7 @@ export const Text = styled.div`
 
   h2,
   p {
-    color: ${cores.bege};
+    color: ${colors.beige};
   }
 
   h2 {
@@ -84,8 +84,8 @@ export const Text = styled.div`
   }
 
   button {
-    background-color: ${cores.bege};
-    color: ${cores.rosa};
+    background-color: ${colors.beige};
+    color: ${colors.pink};
     border: none;
     font-weight: bold;
     padding: 4px 8px;
