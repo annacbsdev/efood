@@ -30,14 +30,14 @@ const Cart = () => {
       address: '',
       city: '',
       zipCode: '',
-      number: 0,
+      number: '',
       complement: '',
       //payment
       cardDisplayName: '',
       cardNumber: '',
-      cardCode: 0,
-      expiresMonth: 0,
-      expiresYear: 0
+      cardCode: '',
+      expiresMonth: '',
+      expiresYear: ''
     },
     validationSchema: Yup.object({
       // Address
@@ -82,6 +82,7 @@ const Cart = () => {
         .required('O campo é obrigatório')
     }),
     onSubmit: (values) => {
+      console.log(values)
       purchase({
         products: items.map((item) => ({
           id: item.id,
@@ -93,7 +94,7 @@ const Cart = () => {
             description: values.address,
             city: values.city,
             zipCode: values.zipCode,
-            number: values.number,
+            number: parseInt(values.number),
             complement: values.complement
           }
         },
@@ -101,10 +102,10 @@ const Cart = () => {
           card: {
             name: values.cardDisplayName,
             number: values.cardNumber,
-            code: values.cardCode,
+            code: parseInt(values.cardCode),
             expires: {
-              month: values.expiresMonth,
-              year: values.expiresYear
+              month: parseInt(values.expiresMonth),
+              year: parseInt(values.expiresYear)
             }
           }
         }
@@ -199,7 +200,7 @@ const Cart = () => {
                 <p>Valor Total</p>
                 <p>{formataPreco(getTotalPrice())}</p>
               </div>
-              <CartButton onClick={handleCheckoutAddress}>
+              <CartButton type="button" onClick={handleCheckoutAddress}>
                 Continuar com a compra
               </CartButton>
             </>
@@ -255,7 +256,7 @@ const Cart = () => {
                     <label htmlFor="number">Número</label>
                     <input
                       id="number"
-                      type="number"
+                      type="text"
                       name="number"
                       value={form.values.number}
                       onChange={form.handleChange}
@@ -278,13 +279,16 @@ const Cart = () => {
                 Continuar com o pagamento
               </CartButton>
 
-              <CartButton onClick={() => setIsCheckoutAddress(false)}>
+              <CartButton
+                type="button"
+                onClick={() => setIsCheckoutAddress(false)}
+              >
                 Voltar para o carrinho
               </CartButton>
             </StyledForm>
-          ) : !isCheckoutAddress && isCheckoutPayment ? (
+          ) : (
             <StyledForm>
-              <h2>Pagamento - Valor a pagar R$ 190,90</h2>
+              <h2>Pagamento - Valor a pagar {formataPreco(getTotalPrice())}</h2>
               <div>
                 <label htmlFor="cardDisplayName">Nome no cartão</label>
                 <input
@@ -318,7 +322,7 @@ const Cart = () => {
                     <label htmlFor="cardCode">CVV</label>
                     <InputMask
                       id="cardCode"
-                      type="number"
+                      type="text"
                       name="cardCode"
                       value={form.values.cardCode}
                       onChange={form.handleChange}
@@ -333,7 +337,7 @@ const Cart = () => {
                     <label htmlFor="expiresMonth">Mês de vencimento</label>
                     <InputMask
                       id="expiresMonth"
-                      type="number"
+                      type="text"
                       name="expiresMonth"
                       value={form.values.expiresMonth}
                       onChange={form.handleChange}
@@ -348,7 +352,7 @@ const Cart = () => {
                     <label htmlFor="expiresYear">Ano de vencimento</label>
                     <InputMask
                       id="expiresYear"
-                      type="number"
+                      type="text"
                       name="expiresYear"
                       value={form.values.expiresYear}
                       onChange={form.handleChange}
@@ -363,12 +367,10 @@ const Cart = () => {
               </div>
               <CartButton type="submit">Finalizar pagamento</CartButton>
 
-              <CartButton onClick={handleGoBackToAddress}>
+              <CartButton type="button" onClick={handleGoBackToAddress}>
                 Voltar para a edição do endereço
               </CartButton>
             </StyledForm>
-          ) : (
-            <h1> oi</h1>
           )}
         </form>
       </Sidebar>
