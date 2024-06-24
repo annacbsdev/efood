@@ -41,45 +41,18 @@ const Cart = () => {
     },
     validationSchema: Yup.object({
       // Address
-      receiver: Yup.string()
-        .min(5, 'O nome precisa ter pelo menos 5 caracteres')
-        .required('O campo é obrigatório'),
-      address: Yup.string()
-        .min(5, 'O endereço precisa ter pelo menos 5 caracteres')
-        .required('O campo é obrigatório'),
-      city: Yup.string()
-        .min(3, 'A cidade precisa ter pelo menos 3 caracteres')
-        .required('O campo é obrigatório'),
-      zipCode: Yup.string()
-        .matches(/^\d{5}-\d{3}$/, 'O CEP precisa estar no formato 12345-678')
-        .required('O campo é obrigatório'),
-      number: Yup.number()
-        .min(1, 'O número precisa ser maior que zero')
-        .required('O campo é obrigatório'),
-      complement: Yup.string(),
+      receiver: Yup.string().min(5).required('O campo é obrigatório'),
+      address: Yup.string().min(3).required('O campo é obrigatório'),
+      city: Yup.string().min(3).required('O campo é obrigatório'),
+      zipCode: Yup.string().required('O campo é obrigatório'),
+      number: Yup.number().required('O campo é obrigatório'),
 
       // Payment
-      cardDisplayName: Yup.string()
-        .min(5, 'O nome no cartão precisa ter pelo menos 5 caracteres')
-        .required('O campo é obrigatório'),
-      cardNumber: Yup.string()
-        .matches(/^\d{16}$/, 'O número do cartão precisa ter 16 dígitos')
-        .required('O campo é obrigatório'),
-      cardCode: Yup.string()
-        .matches(
-          /^\d{3,4}$/,
-          'O código de segurança precisa ter 3 ou 4 dígitos'
-        )
-        .required('O campo é obrigatório'),
-      expiresMonth: Yup.string()
-        .matches(
-          /^(0[1-9]|1[0-2])$/,
-          'O mês de expiração precisa ser entre 01 e 12'
-        )
-        .required('O campo é obrigatório'),
-      expiresYear: Yup.string()
-        .matches(/^\d{4}$/, 'O ano de expiração precisa ter 4 dígitos')
-        .required('O campo é obrigatório')
+      cardDisplayName: Yup.string().min(3),
+      cardNumber: Yup.string().required('O campo é obrigatório'),
+      cardCode: Yup.string().required('O campo é obrigatório'),
+      expiresMonth: Yup.string().required('O campo é obrigatório'),
+      expiresYear: Yup.string().required('O campo é obrigatório')
     }),
     onSubmit: (values) => {
       console.log(values)
@@ -160,7 +133,7 @@ const Cart = () => {
           {isSuccess && data ? (
             <StyledForm>
               <div>
-                <h2>Pedido realizado - ORDER_ID</h2>
+                <h2>Pedido realizado - {data?.orderId}</h2>
                 <p>
                   Estamos felizes em informar que seu pedido já está em processo
                   de preparação e, em breve, será entregue no endereço
@@ -365,7 +338,9 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-              <CartButton type="submit">Finalizar pagamento</CartButton>
+              <CartButton type="submit" onSubmit={() => console.log(data)}>
+                Finalizar pagamento
+              </CartButton>
 
               <CartButton type="button" onClick={handleGoBackToAddress}>
                 Voltar para a edição do endereço
