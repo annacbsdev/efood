@@ -18,4 +18,13 @@ export const BannerContainer = styled.div`
     font-size: 36px;
     text-align: center;
   }
+
+  @media (max-width: 767px) {
+    height: 300px;
+
+    h1 {
+      font-size: 24px;
+      margin: 0 20px;
+    }
+  }
 `

@@ -3,6 +3,7 @@ import {
   CartButton,
   CartContainer,
   CartItem,
+  EmptyCart,
   Overlay,
   Sidebar,
   StyledForm
@@ -130,7 +131,9 @@ const Cart = () => {
       <Overlay onClick={closeCart} />
       <Sidebar>
         <form onSubmit={form.handleSubmit}>
-          {isSuccess && data ? (
+          {items.length < 1 ? (
+            <EmptyCart>Carrinho vazio!</EmptyCart>
+          ) : isSuccess && data ? (
             <StyledForm>
               <div>
                 <h2>Pedido realizado - {data?.orderId}</h2>

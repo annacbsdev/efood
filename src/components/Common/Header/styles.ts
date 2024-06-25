@@ -7,6 +7,10 @@ export const HeaderStyles = styled.header`
   display: flex;
   align-items: center;
   background-image: url(${fundo});
+
+  @media (max-width: 767px) {
+    height: 100px;
+  }
 `
 
 export const HeaderContent = styled.div`
@@ -26,5 +30,28 @@ export const HeaderContent = styled.div`
   a {
     text-decoration: none;
     color: ${colors.pink};
+  }
+
+  span {
+    display: none;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 0 16px;
+  }
+
+  @media (max-width: 767px) {
+    img {
+      height: 30px;
+    }
+
+    h2 {
+      display: none;
+    }
+
+    span {
+      display: block;
+      font-size: 30px;
+    }
   }
 `

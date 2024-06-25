@@ -19,6 +19,10 @@ export const RestaurantBannerStyles = styled.div<
     content: '';
     opacity: 0.56;
   }
+
+  @media (max-width: 767px) {
+    height: 30vh;
+  }
 `
 
 export const RestaurantBannerContent = styled.div`
@@ -38,5 +42,17 @@ export const RestaurantBannerContent = styled.div`
 
   p {
     font-weight: 100;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 32px;
+  }
+
+  @media (max-width: 767px) {
+    height: 30vh;
+    p,
+    h1 {
+      font-size: 24px;
+    }
   }
 `

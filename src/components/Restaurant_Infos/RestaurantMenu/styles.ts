@@ -10,6 +10,13 @@ export const RestaurantMenuStyles = styled.div`
   li {
     cursor: pointer;
   }
+
+  @media (max-width: 1024px) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 export const Modal = styled.div`
@@ -43,7 +50,6 @@ export const ModalContent = styled.div`
   height: 344px;
   display: flex;
   justify-content: space-between;
-
   z-index: 1;
 
   > :first-child {
@@ -57,6 +63,21 @@ export const ModalContent = styled.div`
     width: 16px;
     height: 16px;
     margin: 8px 8px 0 0;
+  }
+
+  @media (max-width: 767px) {
+    height: 75%;
+    width: 80%;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0;
+
+    > :first-child {
+      width: 80%;
+      height: 200px;
+      margin: 0;
+      margin-top: 20px;
+    }
   }
 `
 
@@ -90,5 +111,9 @@ export const Text = styled.div`
     font-weight: bold;
     padding: 4px 8px;
     cursor: pointer;
+  }
+
+  @media (max-width: 767px) {
+    padding-right: 24px;
   }
 `

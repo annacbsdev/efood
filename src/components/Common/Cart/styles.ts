@@ -135,3 +135,7 @@ export const StyledForm = styled.div`
     line-height: 22px;
   }
 `
+
+export const EmptyCart = styled.h2`
+  color: ${colors.beige};
+`
