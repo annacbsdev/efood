@@ -134,6 +134,10 @@ export const StyledForm = styled.div`
     font-size: 14px;
     line-height: 22px;
   }
+
+  .error {
+    border: 2px solid red;
+  }
 `
 
 export const EmptyCart = styled.h2`

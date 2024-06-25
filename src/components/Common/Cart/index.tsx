@@ -11,7 +11,7 @@ import {
 import lixo from '../../../assets/lixo.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../../store'
-import { close, remove } from '../../../store/reducers/cart'
+import { close, remove, clear } from '../../../store/reducers/cart'
 import { formataPreco } from '../../Restaurant_Infos/RestaurantMenu'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -22,18 +22,18 @@ const Cart = () => {
   const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
   const [isCheckoutAddress, setIsCheckoutAddress] = useState(false)
   const [isCheckoutPayment, setIsCheckoutPayment] = useState(false)
-  const [purchase, { data, isSuccess }] = usePurchaseMutation()
+  const [purchase, { data, isSuccess, reset }] = usePurchaseMutation()
 
   const form = useFormik({
     initialValues: {
-      //address
+      // address
       receiver: '',
       address: '',
       city: '',
       zipCode: '',
       number: '',
       complement: '',
-      //payment
+      // payment
       cardDisplayName: '',
       cardNumber: '',
       cardCode: '',
@@ -55,7 +55,7 @@ const Cart = () => {
       expiresMonth: Yup.string().required('O campo é obrigatório'),
       expiresYear: Yup.string().required('O campo é obrigatório')
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       console.log(values)
       purchase({
         products: items.map((item) => ({
@@ -83,8 +83,9 @@ const Cart = () => {
             }
           }
         }
+      }).then(() => {
+        resetForm()
       })
-      console.log(data)
     }
   })
 
@@ -116,14 +117,43 @@ const Cart = () => {
     setIsCheckoutAddress(true)
   }
 
+  const validateDeliveryForm = () => {
+    const { receiver, address, city, zipCode, number } = form.values
+
+    const isReceiverValid = receiver.trim() !== ''
+    const isAddressValid = address.trim() !== ''
+    const isCityValid = city.trim() !== ''
+    const isZipCodeValid = zipCode.trim() !== '' && zipCode.length === 9
+    const isNumberValid = Number.isInteger(Number(number))
+
+    return (
+      isReceiverValid &&
+      isAddressValid &&
+      isCityValid &&
+      isZipCodeValid &&
+      isNumberValid
+    )
+  }
   const handleCheckoutPayment = () => {
-    setIsCheckoutAddress(false)
-    setIsCheckoutPayment(true)
+    const deliveryFormIsValid = validateDeliveryForm()
+    if (deliveryFormIsValid) {
+      setIsCheckoutAddress(false)
+      setIsCheckoutPayment(true)
+    } else {
+      console.log('O formulário de entrega não está válido.')
+    }
   }
 
   const handleGoBackToAddress = () => {
     setIsCheckoutAddress(true)
     setIsCheckoutPayment(false)
+  }
+
+  const finishOrder = () => {
+    dispatch(clear())
+    setIsCheckoutAddress(false)
+    setIsCheckoutPayment(false)
+    reset()
   }
 
   return (
@@ -154,7 +184,14 @@ const Cart = () => {
                   experiência gastronômica. Bom apetite!
                 </p>
               </div>
-              <CartButton onClick={closeCart}>Concluir</CartButton>
+              <CartButton
+                onClick={() => {
+                  closeCart()
+                  finishOrder()
+                }}
+              >
+                Concluir
+              </CartButton>
             </StyledForm>
           ) : !isCheckoutAddress && !isCheckoutPayment ? (
             <>
@@ -341,9 +378,7 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-              <CartButton type="submit" onSubmit={() => console.log(data)}>
-                Finalizar pagamento
-              </CartButton>
+              <CartButton type="submit">Finalizar pagamento</CartButton>
 
               <CartButton type="button" onClick={handleGoBackToAddress}>
                 Voltar para a edição do endereço
